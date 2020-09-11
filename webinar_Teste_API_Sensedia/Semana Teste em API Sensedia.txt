@@ -1,0 +1,9 @@
+Semana Teste em API Sensedia
+
+https://content.sensedia.com/pt/semana-teste-em-api-full
+
+Aula 1: Introdução e Apresentação do Postman
+Aula 2: Como gerar key e token de acesso a API do Trello
+Aula 3: Como cadastrar um novo board no Trello utilizando API
+Aula 4: Instalando dependências do Newman e integrando testes
+

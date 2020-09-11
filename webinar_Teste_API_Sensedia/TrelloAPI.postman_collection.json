@@ -1,0 +1,259 @@
+{
+	"info": {
+		"_postman_id": "a6d775d9-1952-4a5f-baba-d32ed4d31d81",
+		"name": "Trello API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST/boards",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3d157303-acbb-4734-84e7-75a320d9ecaf",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"boardId\", jsonData.id)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    pm.expect(jsonData.name).to.eql(\"Testes Webinar Sensedia\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"idOrganization\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"closed\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"idEnterprise\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/1/boards/?key={{key}}&token={{token}}&name=Testes Webinar Sensedia",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "Testes Webinar Sensedia"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST/lists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "197f9dde-2ae1-43c4-b460-172a57ba6a1e",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"listId\", jsonData.id)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    pm.expect(jsonData.name).to.eql(\"backlog\");\r",
+							"    pm.expect(jsonData.idBoard).to.eql(pm.collectionVariables.get(\"boardId\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/1/lists?key={{key}}&token={{token}}&name=backlog&idBoard={{boardId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"1",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "backlog"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{boardId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST/cards",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "23b55944-9e2d-418d-8006-cbe281454b79",
+						"exec": [
+							"pm.collectionVariables.set(\"nameCard\", \"Sensedia\")"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "5ac51f2d-7c76-45fb-815e-db9874e93cd4",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    pm.expect(jsonData.idList).to.eql(pm.collectionVariables.get(\"listId\"));\r",
+							"    pm.expect(jsonData.idBoard).to.eql(pm.collectionVariables.get(\"boardId\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/1/cards?key={{key}}&token={{token}}&idList={{listId}}&name={{nameCard}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"1",
+						"cards"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "idList",
+							"value": "{{listId}}"
+						},
+						{
+							"key": "name",
+							"value": "{{nameCard}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE/boards",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b967b7a3-13ea-410c-b014-7a12ee19dcb9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/1/boards/{{boardId}}?key={{key}}&token={{token}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						"{{boardId}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "8d8908c6-622b-4f37-b626-ed326e4e67a2",
+			"key": "boardId",
+			"value": ""
+		},
+		{
+			"id": "4b138c63-f972-4db7-b7ca-d4131c5bd101",
+			"key": "listId",
+			"value": ""
+		},
+		{
+			"id": "d3ea6e87-38fe-40cd-9455-af4590c2d988",
+			"key": "nameCard",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}
