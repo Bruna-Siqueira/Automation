@@ -1,0 +1,19 @@
+{
+  "name": "Desafio_Z",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cucumber": "^6.0.5"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "chai": "^4.2.0"
+  }
+}
